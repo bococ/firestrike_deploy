@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+
+<option
+	production="0"
+	gm_level="0"
+	log_level="5"
+	log_to_file="1"
+	test_tool_host="127.0.0.1"
+	test_tool_port="10009"
+	test_tool_camp="100"
+	test_tool_bot_count="1"
+	test_tool_bot_interval="100"
+	test_tool_timeout="8000"
+	test_tool_wait_others="0"
+	test_tool_case="test_temp"
+	test_tool_loop_times="1"
+	test_tool_account=""
+	test_tool_replica_index="1"
+	>
+</option>

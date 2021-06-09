@@ -1,0 +1,2 @@
+NodeSelectorName: global
+FirestrikeServerDockerImage: 602245705509.dkr.ecr.us-west-2.amazonaws.com/firestrike-server

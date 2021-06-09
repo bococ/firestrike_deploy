@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<!--
+网络模块参数：
+
+big_buf_size	大缓冲的大小。单位：字节
+big_buf_num		大缓冲的数目
+small_buf_size	小缓冲的大小。单位：字节
+small_buf_num	小缓冲的数目
+listener_num	监听对象的数目
+socketer_num	连接对象的数目
+thread_num		线程数目
+
+对于内网进程，建议值：
+	big_buf_size="524288"
+	big_buf_num="64"
+	small_buf_size="16384"
+	small_buf_num="32"
+	listener_num="4"
+	socketer_num="32"
+	thread_num="1"
+
+对于网关，建议值：
+	big_buf_size="524288"
+	big_buf_num="32"
+	small_buf_size="16384"
+	small_buf_num="12000"
+	listener_num="4"
+	socketer_num="6000"
+	thread_num="2"
+-->
+
+<network
+	big_buf_size="524288"
+	big_buf_num="64"
+	small_buf_size="16384"
+	small_buf_num="32"
+	listener_num="4"
+	socketer_num="16384"
+	thread_num="2"
+	>
+</network>

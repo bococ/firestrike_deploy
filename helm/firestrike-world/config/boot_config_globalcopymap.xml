@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<boot_config
+	frame_time="50"
+	super_frame_time="200"
+	connector_pools_num="128"
+	receiver_pools_num="128"
+	node_name="GLOBALCOPYMAP_ID">
+
+	<!--<node id="GLOBALCOPYMAP_ID" public="true" listen_port="NODE_LISTEN_PORT"/>-->
+
+  	<worker type_name="globalcopymap" listen_port="GLOBALCOPYMAP_LISTEN_PORT"/>
+
+</boot_config>
+

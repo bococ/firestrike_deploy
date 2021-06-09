@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<boot_config
+	frame_time="50"
+	super_frame_time="200"
+
+	connector_pools_num="128"
+	receiver_pools_num="128"
+
+	node_name="GAME_WORLD_ID">
+
+  	<worker type_name="stateless" tag="STATELESS_ID"/>
+
+</boot_config>

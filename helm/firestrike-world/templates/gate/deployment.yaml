@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gate
+spec:
+  selector:
+    matchLabels:
+      app: gate
+  revisionHistoryLimit: 5
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: gate
+    spec:
+      containers:
+      - name: gate
+        image: {{ .Values.FirestrikeServerDockerImage }}
+        env:
+        - name: SERVER_TYPE
+          value: "gate"
+        - name: GATE_PORT
+          value: "10009"
+        - name: NODE_MGR_HOST
+          value: "{{ .Values.NodemgrHost }}"
+        - name: NODE_MGR_PORT
+          value: "7690"
+        - name: GLOBALCOPYMAP_ID
+          value: "{{ .Values.GlobalcopymapId }}"
+        - name: GAME_WORLD_ID
+          value: "{{ .Values.GameWorldId }}"
+        - name: GATE_ID
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        volumeMounts:
+        - name: config
+          mountPath: "/config"
+        resources:
+          requests:
+{{- if eq .Values.env "prod" }}
+            cpu: 200m
+            memory: 400Mi
+{{- else }}
+            cpu: 100m
+            memory: 200Mi
+{{- end }}
+        ports:
+        - containerPort: 10009
+        - containerPort: 8001
+      priorityClassName: common-priority
+      nodeSelector:
+        name: {{ .Values.NodeSelectorName }}
+      volumes:
+      - name: config
+        secret:
+          secretName: config

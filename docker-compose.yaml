@@ -1,0 +1,183 @@
+version: '3'
+
+services:
+
+  redis_global:
+    image: redis
+    expose:
+      - "6379"
+  redis_world:
+    image: redis
+    expose:
+      - "6379"
+  nodemgr:
+    image: 688532141779.dkr.ecr.ap-southeast-1.amazonaws.com/firestrike-server
+    volumes:
+      - "./config_template:/config"
+    expose:
+      - "7690"
+    environment:
+      - "SERVER_TYPE=nodemgr"
+      - "NODE_MGR_PORT=7690"
+  center:
+    image: 688532141779.dkr.ecr.ap-southeast-1.amazonaws.com/firestrike-server
+    volumes:
+      - "./config_template:/config"
+    expose:
+      - "10010-10011"
+    environment:
+      - "GAME_WORLD_ID=9898"
+      - "NODE_LISTEN_PORT=10010"
+      - "CENTER_LISTEN_PORT=10011"
+      - "NODE_MGR_HOST=nodemgr"
+      - "NODE_MGR_PORT=7690"
+      - "REDIS_WORLD_HOST=redis_world"
+      - "REDIS_WORLD_PORT=6379"
+      - "REDIS_GLOBAL_HOST=redis_global"
+      - "REDIS_GLOBAL_PORT=6379"
+      - "SERVER_TYPE=center"
+    depends_on:
+      - nodemgr
+      - redis_global
+      - redis_world
+  logic:
+    image: 688532141779.dkr.ecr.ap-southeast-1.amazonaws.com/firestrike-server
+    volumes:
+      - "./config_template:/config"
+    expose:
+      - "10012"
+    environment:
+      - "GAME_WORLD_ID=9898"
+      - "LOGIC_LISTEN_PORT=10012"
+      - "NODE_MGR_HOST=nodemgr"
+      - "NODE_MGR_PORT=7690"
+      - "REDIS_WORLD_HOST=redis_world"
+      - "REDIS_WORLD_PORT=6379"
+      - "REDIS_GLOBAL_HOST=redis_global"
+      - "REDIS_GLOBAL_PORT=6379"
+      - "GMTOOL_SKIP=1"
+      - "GMTOOL_SERVER_HOST=gmtool"
+      - "GMTOOL_SERVER_PORT=3344"
+      - "SERVER_TYPE=logic"
+    depends_on:
+      - nodemgr
+      - redis_global
+      - redis_world
+  map_1:
+    image: 688532141779.dkr.ecr.ap-southeast-1.amazonaws.com/firestrike-server
+    volumes:
+      - "./config_template:/config"
+    expose:
+      - "10013"
+    environment:
+      - "GAME_WORLD_ID=9898"
+      - "MAP_ID=1"
+      - "MAP_LISTEN_PORT=10013"
+      - "NODE_MGR_HOST=nodemgr"
+      - "NODE_MGR_PORT=7690"
+      - "REDIS_WORLD_HOST=redis_world"
+      - "REDIS_WORLD_PORT=6379"
+      - "SERVER_TYPE=map"
+    depends_on:
+      - nodemgr
+      - redis_world
+  map_2:
+    image: 688532141779.dkr.ecr.ap-southeast-1.amazonaws.com/firestrike-server
+    volumes:
+      - "./config_template:/config"
+    expose:
+      - "10014"
+    environment:
+      - "GAME_WORLD_ID=9898"
+      - "MAP_ID=2"
+      - "MAP_LISTEN_PORT=10014"
+      - "NODE_MGR_HOST=nodemgr"
+      - "NODE_MGR_PORT=7690"
+      - "REDIS_WORLD_HOST=redis_world"
+      - "REDIS_WORLD_PORT=6379"
+      - "SERVER_TYPE=map"
+    depends_on:
+      - nodemgr
+      - redis_world
+  map_3:
+    image: 688532141779.dkr.ecr.ap-southeast-1.amazonaws.com/firestrike-server
+    volumes:
+      - "./config_template:/config"
+    expose:
+      - "10015"
+    environment:
+      - "GAME_WORLD_ID=9898"
+      - "MAP_ID=3"
+      - "MAP_LISTEN_PORT=10015"
+      - "NODE_MGR_HOST=nodemgr"
+      - "NODE_MGR_PORT=7690"
+      - "REDIS_WORLD_HOST=redis_world"
+      - "REDIS_WORLD_PORT=6379"
+      - "SERVER_TYPE=map"
+    depends_on:
+      - nodemgr
+      - redis_world
+  gate_1:
+    image: 688532141779.dkr.ecr.ap-southeast-1.amazonaws.com/firestrike-server
+    volumes:
+      - "./config_template:/config"
+    expose:
+      - "10009"
+    ports:
+      - "10009:10009"
+    environment:
+      - "GAME_WORLD_ID=9898"
+      - "GATE_ID=g1"
+      - "GATE_PORT=10009"
+      - "NODE_MGR_HOST=nodemgr"
+      - "NODE_MGR_PORT=7690"
+      - "SERVER_TYPE=gate"
+    depends_on:
+      - nodemgr
+  gate_2:
+    image: 688532141779.dkr.ecr.ap-southeast-1.amazonaws.com/firestrike-server
+    volumes:
+      - "./config_template:/config"
+    expose:
+      - "10008"
+    ports:
+      - "10008:10008"
+    environment:
+      - "GAME_WORLD_ID=9898"
+      - "GATE_ID=g2"
+      - "GATE_PORT=10008"
+      - "NODE_MGR_HOST=nodemgr"
+      - "NODE_MGR_PORT=7690"
+      - "SERVER_TYPE=gate"
+    depends_on:
+      - nodemgr
+  stateless_1:
+    image: 688532141779.dkr.ecr.ap-southeast-1.amazonaws.com/firestrike-server
+    volumes:
+      - "./config_template:/config"
+    environment:
+      - "GAME_WORLD_ID=9898"
+      - "STATELESS_ID=1"
+      - "NODE_MGR_HOST=nodemgr"
+      - "NODE_MGR_PORT=7690"
+      - "REDIS_WORLD_HOST=redis_world"
+      - "REDIS_WORLD_PORT=6379"
+      - "SERVER_TYPE=stateless"
+    depends_on:
+      - nodemgr
+      - redis_world
+  stateless_2:
+    image: 688532141779.dkr.ecr.ap-southeast-1.amazonaws.com/firestrike-server
+    volumes:
+      - "./config_template:/config"
+    environment:
+      - "GAME_WORLD_ID=9898"
+      - "STATELESS_ID=2"
+      - "NODE_MGR_HOST=nodemgr"
+      - "NODE_MGR_PORT=7690"
+      - "REDIS_WORLD_HOST=redis_world"
+      - "REDIS_WORLD_PORT=6379"
+      - "SERVER_TYPE=stateless"
+    depends_on:
+      - nodemgr
+      - redis_world

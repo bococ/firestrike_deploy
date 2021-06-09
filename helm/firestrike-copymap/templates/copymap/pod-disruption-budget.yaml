@@ -1,0 +1,10 @@
+apiVersion: policy/v1beta1
+kind: PodDisruptionBudget
+metadata:
+  name: copymap
+spec:
+  selector:
+    matchLabels:
+      app: copymap
+      tier: backend
+  minAvailable: 2

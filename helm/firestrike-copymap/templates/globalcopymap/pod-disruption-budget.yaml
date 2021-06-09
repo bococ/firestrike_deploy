@@ -1,0 +1,9 @@
+apiVersion: policy/v1beta1
+kind: PodDisruptionBudget
+metadata:
+  name: globalcopymap
+spec:
+  selector:
+    matchLabels:
+      app: globalcopymap
+  minAvailable: 1

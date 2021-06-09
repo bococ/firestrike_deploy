@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+
+<database>
+
+	<redis-world dbname="REDIS_WORLD_DBNAME" host="REDIS_WORLD_HOST" port="REDIS_WORLD_PORT" username="REDIS_WORLD_USERNAME" password="REDIS_WORLD_PASSWORD"/>
+	<redis-global dbname="REDIS_GLOBAL_DBNAME" host="REDIS_GLOBAL_HOST"	port="REDIS_GLOBAL_PORT" username="REDIS_GLOBAL_USERNAME" password="REDIS_GLOBAL_PASSWORD"/>
+	<redis-copymap dbname="REDIS_COPYMAP_DBNAME" host="REDIS_COPYMAP_HOST"	port="REDIS_COPYMAP_PORT" username="REDIS_COPYMAP_USERNAME" password="REDIS_COPYMAP_PASSWORD"/>
+</database>

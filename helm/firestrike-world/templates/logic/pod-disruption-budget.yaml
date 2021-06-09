@@ -1,0 +1,9 @@
+apiVersion: policy/v1beta1
+kind: PodDisruptionBudget
+metadata:
+  name: logic
+spec:
+  selector:
+    matchLabels:
+      app: logic
+  minAvailable: 1

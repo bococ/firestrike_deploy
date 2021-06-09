@@ -1,0 +1,92 @@
+[2020-05-26 10:18:09] [ERROR] Let's show an error log
+stack traceback:
+	script/logic/mail/schedule_send_mail.lua:39: in function 'add_schedule'
+	script/logic/mail/schedule_send_mail.lua:85: in function 'create_func'
+	node-x/gamecore/core/init.lua:185: in function 'finish_register'
+	script/logic/init.lua:176: in function 'load_module'
+	script/logic/init.lua:256: in function 'link'
+	node-x/alone/node/container_service.lua:486: in function 'real_load'
+	node-x/alone/node/container_service.lua:96: in function <node-x/alone/node/container_service.lua:90>
+	bootinit/service/logic_service.lua:17: in function 'start'
+	node-x/alone/node/base_container.lua:208: in function 'start'
+	node-x/alone/node/container_manager.lua:115: in function 'eventInit'
+	node-x/alone/node/node_event_drive.lua:256: in function 'real_event_init'
+	node-x/alone/node/node_event_drive.lua:265: in function <node-x/alone/node/node_event_drive.lua:264>
+	[C]: in function 'xpcall'
+	node-x/core-x/coroutine/coroutine.lua:18: in function <node-x/core-x/coroutine/coroutine.lua:16>
+locals =
+{
+    schedule =
+    {
+        dec = Greetings Commander, We are sorry for what inconvenience happened to you. We have attached the rewards in this message that compensate for the obstacles and troubles caused in your game. Thank you very much for supporting. Wish you have fun both in game and in life.    [type:string]
+        disposable = 1    [type:number]
+        id = 1    [type:number]
+        rewards =
+        {
+            1 =
+            {
+                _id = 10008    [type:number]
+                _change_value = 200    [type:number]
+            }
+        }
+        title = Compensative Gifts    [type:string]
+        type = 2    [type:number]
+        award = 10008|200    [type:string]
+        sender = OWG Studio    [type:string]
+        sendtime =
+        {
+            _vari_time =
+            {
+                min = 0    [type:number]
+                hour = 7    [type:number]
+            }
+            _vari_part = day    [type:string]
+        }
+    }
+}
+[2020-05-26 10:19:09] [ERROR] Let's show one more error log
+stack traceback:
+	script/logic/mail/schedule_send_mail.lua:39: in function 'add_schedule'
+	script/logic/mail/schedule_send_mail.lua:85: in function 'create_func'
+	node-x/gamecore/core/init.lua:185: in function 'finish_register'
+	script/logic/init.lua:176: in function 'load_module'
+	script/logic/init.lua:256: in function 'link'
+	node-x/alone/node/container_service.lua:486: in function 'real_load'
+	node-x/alone/node/container_service.lua:96: in function <node-x/alone/node/container_service.lua:90>
+	bootinit/service/logic_service.lua:17: in function 'start'
+	node-x/alone/node/base_container.lua:208: in function 'start'
+	node-x/alone/node/container_manager.lua:115: in function 'eventInit'
+	node-x/alone/node/node_event_drive.lua:256: in function 'real_event_init'
+	node-x/alone/node/node_event_drive.lua:265: in function <node-x/alone/node/node_event_drive.lua:264>
+	[C]: in function 'xpcall'
+	node-x/core-x/coroutine/coroutine.lua:18: in function <node-x/core-x/coroutine/coroutine.lua:16>
+locals =
+{
+    schedule =
+    {
+        dec = Greetings Commander, We are sorry for what inconvenience happened to you. We have attached the rewards in this message that compensate for the obstacles and troubles caused in your game. Thank you very much for supporting. Wish you have fun both in game and in life.    [type:string]
+        disposable = 1    [type:number]
+        id = 1    [type:number]
+        rewards =
+        {
+            1 =
+            {
+                _id = 10008    [type:number]
+                _change_value = 200    [type:number]
+            }
+        }
+        title = Compensative Gifts    [type:string]
+        type = 2    [type:number]
+        award = 10008|200    [type:string]
+        sender = OWG Studio    [type:string]
+        sendtime =
+        {
+            _vari_time =
+            {
+                min = 0    [type:number]
+                hour = 7    [type:number]
+            }
+            _vari_part = day    [type:string]
+        }
+    }
+}

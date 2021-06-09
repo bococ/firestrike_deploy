@@ -1,0 +1,5 @@
+FirestrikeServerDockerImage: 602245705509.dkr.ecr.us-west-2.amazonaws.com/firestrike-server:cbaea75
+RedisGlobalHost: redis.firestrike-global1.svc.cluster.local
+NodemgrHost: nodemgr.firestrike-global1.svc.cluster.local
+NodeSelectorName: world
+env: prod

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<!--
+#游戏工具服务器信息
+skip			跳过连接游戏工具服务器
+server_host		服务器管理器host
+server_port		服务器管理器监听端口
+magic_key		魔法字符串，小于128字节
+-->
+<gmtool
+	skip="0"
+	server_host="interface.rtxgames.fun"
+	server_port="13344"
+	magic_key="abcdef0981__+~~!#"
+	>
+</gmtool>

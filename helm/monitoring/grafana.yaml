@@ -1,0 +1,30 @@
+USER-SUPPLIED VALUES:
+adminPassword: RTXFirestrikePrometheusPassword321
+datasources:
+  datasources.yaml:
+    apiVersion: 1
+    datasources:
+    - access: proxy
+      isDefault: true
+      name: Prometheus
+      type: prometheus
+      url: http://prometheus-server.monitoring.svc.cluster.local
+service:
+  type: LoadBalancer
+persistence:
+  type: pvc
+  enabled: true
+  storageClassName: gp2
+  accessModes:
+    - ReadWriteOnce
+  size: 10Gi
+  finalizers:
+    - kubernetes.io/pvc-protection
+nodeSelector:
+  name: monitoring
+grafana.ini:
+  smtp:
+    enabled: true
+    host: "smtp.gmail.com:587"
+    user: "info@infrtx.com"
+    password: "iLove@owg"

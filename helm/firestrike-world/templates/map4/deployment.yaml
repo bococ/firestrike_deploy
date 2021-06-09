@@ -1,0 +1,64 @@
+{{- if ne .Values.env "dev" }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: map04
+spec:
+  selector:
+    matchLabels:
+      app: map04
+      tier: backend
+  revisionHistoryLimit: 5
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: map04
+        tier: backend
+    spec:
+      containers:
+      - name: map04
+        image: {{ .Values.FirestrikeServerDockerImage }}
+        env:
+        - name: SERVER_TYPE
+          value: "map"
+        - name: MAP_ID
+          value: "4"
+        - name: MAP_LISTEN_PORT
+          value: "1340"
+        - name: NODE_MGR_HOST
+          value: "{{ .Values.NodemgrHost }}"
+        - name: NODE_MGR_PORT
+          value: "7690"
+        - name: GAME_WORLD_ID
+          value: "{{ .Values.GameWorldId }}"
+        - name: REDIS_WORLD_HOST
+          value: "redis"
+        - name: REDIS_WORLD_PORT
+          value: "6379"
+        volumeMounts:
+        - name: config
+          mountPath: "/config"
+        resources:
+          requests:
+            cpu: 250m
+            memory: 1.2Gi
+        ports:
+        - containerPort: 8001
+        readinessProbe:
+          exec:
+            command:
+            - cat
+            - /app/prototype/healthy
+          initialDelaySeconds: 5
+          periodSeconds: 5
+      priorityClassName: common-priority
+      nodeSelector:
+        name: {{ .Values.NodeSelectorName }}
+      volumes:
+      - name: config
+        secret:
+          secretName: config
+{{- end }}

@@ -1,0 +1,113 @@
+FROM centos:7
+
+RUN yum update -y
+RUN yum install -y \
+	bzip2 \
+	wget \
+	which \
+	gcc \
+	gcc-c++ \
+	make \
+	glibc-devel \
+	openssl-devel \
+	zlib-devel
+
+# Get a newer cmake
+RUN wget https://github.com/Kitware/CMake/releases/download/v3.18.0/cmake-3.18.0-Linux-x86_64.tar.gz \
+	&& tar -xzf cmake-3.18.0-Linux-x86_64.tar.gz \
+	&& export PATH=${PATH}:/cmake-3.18.0-Linux-x86_64/bin
+
+ENV PATH="/cmake-3.18.0-Linux-x86_64/bin:${PATH}"
+
+# Get boost
+RUN wget https://boostorg.jfrog.io/artifactory/main/release/1.72.0/source/boost_1_72_0.tar.bz2 \
+	&& tar -xjf boost_1_72_0.tar.bz2 \
+	&& rm boost_1_72_0.tar.bz2
+
+## Build boost
+RUN cd boost_1_72_0 \
+	&& ./bootstrap.sh \
+	&& ./b2 variant=release threading=single link=static cxxflags=-fPIC cflags=-fPIC --with-regex install
+
+# Create required folders
+RUN mkdir -p /app/prototype/bootinit/clibs/linux/luajit
+RUN mkdir -p /app/prototype/config
+ADD ./framework /app/framework
+
+# Build C Framework
+WORKDIR /app/framework/server
+RUN make -f Makefile.node-x linux-release-jit
+RUN cp node-x/nodesolid/nodesolid /app/prototype
+
+# Add C Libraries
+ADD ./clibs /app/clibs
+
+# Build asio
+WORKDIR /app/clibs/asio
+RUN mkdir BUILD \
+	&& cd BUILD \
+	&& cmake .. \
+	&& make \
+	&& cp context/asio_context.so \
+			hiredis/asio_hiredis.so \
+			http/asio_http.so \
+			schedule/asio_schedule.so \
+			/app/prototype/bootinit/clibs/linux/luajit
+
+# Build socket
+WORKDIR /app/clibs/socket
+RUN mkdir BUILD \
+	&& cd BUILD \
+	&& cmake .. \
+	&& make \
+	&& cp socket.so /app/prototype/bootinit/clibs/linux/luajit
+
+# Build regex
+WORKDIR /app/clibs/regex
+RUN mkdir BUILD \
+	&& cd BUILD \
+	&& cmake .. \
+	&& make \
+	&& cp regex.so /app/prototype/bootinit/clibs/linux/luajit
+
+# Build prometheus client
+WORKDIR /app/clibs/prometheus
+RUN mkdir BUILD \
+	&& cd BUILD \
+	&& cmake .. \
+	&& make \
+	&& cp promeclient.so /app/prototype/bootinit/clibs/linux/luajit
+
+WORKDIR /app/clibs/jwt
+RUN mkdir BUILD \
+	&& cd BUILD \
+	&& cmake .. \
+	&& make \
+	&& cp jwt.so /app/prototype/bootinit/clibs/linux/luajit
+
+# Build luapb
+WORKDIR /app/clibs/luapb
+RUN mkdir BUILD \
+	&& cd BUILD \
+	&& cmake .. \
+	&& make \
+	&& cp luapb.so /app/prototype/bootinit/clibs/linux/luajit
+
+# Add source
+ADD ./prototype /app/prototype
+
+# Build runtime image
+FROM centos:7
+RUN yum update -y
+RUN yum install -y \
+	openssl	
+
+RUN groupadd -g 666 appuser && \
+		useradd -r -u 666 -g appuser appuser
+WORKDIR /app/prototype
+COPY --from=0 /app/prototype .
+ADD ./config_template /app/prototype/config
+ADD ./run.sh .
+RUN chown -R appuser:appuser /app
+USER appuser
+CMD ["./run.sh"]

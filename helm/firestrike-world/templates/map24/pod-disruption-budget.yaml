@@ -1,0 +1,10 @@
+apiVersion: policy/v1beta1
+kind: PodDisruptionBudget
+metadata:
+  name: map24
+spec:
+  selector:
+    matchLabels:
+      app: map24
+      tier: backend
+  minAvailable: 1

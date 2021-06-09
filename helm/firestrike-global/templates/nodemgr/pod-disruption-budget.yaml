@@ -1,0 +1,9 @@
+apiVersion: policy/v1beta1
+kind: PodDisruptionBudget
+metadata:
+  name: nodemgr
+spec:
+  selector:
+    matchLabels:
+      app: nodemgr
+  minAvailable: 1

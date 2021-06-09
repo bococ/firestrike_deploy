@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nodemgr
+  labels:
+    app: nodemgr
+spec:
+  ports:
+  - port: 7690
+    targetPort: 7690
+  selector:
+    app: nodemgr

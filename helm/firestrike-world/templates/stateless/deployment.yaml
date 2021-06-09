@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stateless
+spec:
+  selector:
+    matchLabels:
+      app: stateless
+      tier: backend
+  revisionHistoryLimit: 5
+{{- if eq .Values.env "prod" }}
+  replicas: 3
+{{- else }}
+  replicas: 1
+{{- end }}
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: stateless
+        tier: backend
+    spec:
+      containers:
+      - name: stateless
+        image: {{ .Values.FirestrikeServerDockerImage }}
+        env:
+        - name: SERVER_TYPE
+          value: "stateless"
+        - name: NODE_MGR_HOST
+          value: "{{ .Values.NodemgrHost }}"
+        - name: NODE_MGR_PORT
+          value: "7690"
+        - name: GAME_WORLD_ID
+          value: "{{ .Values.GameWorldId }}"
+        - name: REDIS_WORLD_HOST
+          value: "redis"
+        - name: REDIS_WORLD_PORT
+          value: "6379"
+        - name: STATELESS_ID
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        volumeMounts:
+        - name: config
+          mountPath: "/config"
+        resources:
+          requests:
+            cpu: 100m
+            memory: 200Mi
+        ports:
+        - containerPort: 8001
+      priorityClassName: common-priority
+      nodeSelector:
+        name: {{ .Values.NodeSelectorName }}
+      volumes:
+      - name: config
+        secret:
+          secretName: config

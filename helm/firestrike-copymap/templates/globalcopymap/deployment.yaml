@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: globalcopymap
+spec:
+  selector:
+    matchLabels:
+      app: globalcopymap
+  revisionHistoryLimit: 5
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: globalcopymap
+    spec:
+      containers:
+      - name: globalcopymap
+        image: {{ .Values.FirestrikeServerDockerImage }}
+        env:
+        - name: SERVER_TYPE
+          value: "globalcopymap"
+        - name: GLOBALCOPYMAP_LISTEN_PORT
+          value: "1341"
+        - name: NODE_MGR_HOST
+          value: "{{ .Values.NodemgrHost }}"
+        - name: NODE_MGR_PORT
+          value: "7690"
+        - name: GLOBALCOPYMAP_ID
+          value: "{{ .Values.GlobalcopymapId }}"
+        - name: NODE_LISTEN_PORT
+          value: "1337"
+        - name: REDIS_COPYMAP_HOST
+          value: "redis"
+        - name: REDIS_COPYMAP_PORT
+          value: "6379"
+        volumeMounts:
+        - name: config
+          mountPath: "/config"
+        resources:
+          requests:
+            cpu: 250m
+            memory: 1Gi
+        ports:
+        - containerPort: 1337
+        - containerPort: 1341
+        - containerPort: 8001
+      priorityClassName: common-priority
+      nodeSelector:
+        name: {{ .Values.NodeSelectorName }}
+      volumes:
+      - name: config
+        secret:
+          secretName: config

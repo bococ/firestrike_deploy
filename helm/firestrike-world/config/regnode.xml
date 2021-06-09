@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<!--
+#节点注册相关的信息
+nodemgr_host		节点管理器地址,nodemgr进程会忽略该字段
+nodemgr_port		节点管理器监听端口
+nodemgr_name		节点管理器名字，小于128字节的字符串，不能为 "selfnode"
+magic_key			魔法字符串，小于128字节
+-->
+<regnode
+	nodemgr_host="NODE_MGR_HOST"
+	nodemgr_port="NODE_MGR_PORT"
+	nodemgr_name="game_nodemgr"
+	magic_key="abcdef0981__+~~!#"
+	>
+</regnode>

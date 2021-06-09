@@ -1,0 +1,10 @@
+apiVersion: policy/v1beta1
+kind: PodDisruptionBudget
+metadata:
+  name: stateless
+spec:
+  selector:
+    matchLabels:
+      app: stateless
+      tier: backend
+  minAvailable: 2

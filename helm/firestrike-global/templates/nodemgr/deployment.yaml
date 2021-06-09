@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nodemgr
+spec:
+  selector:
+    matchLabels:
+      app: nodemgr
+  revisionHistoryLimit: 5
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: nodemgr
+    spec:
+      containers:
+      - name: nodemgr
+        image: {{ .Values.FirestrikeServerDockerImage }}
+        env:
+        - name: SERVER_TYPE
+          value: "nodemgr"
+        - name: NODE_MGR_PORT
+          value: "7690"
+        volumeMounts:
+        - name: config
+          mountPath: "/config"
+        resources:
+          requests:
+            cpu: 50m
+            memory: 200Mi
+        ports:
+        - containerPort: 7690
+        - containerPort: 8001
+      priorityClassName: common-priority
+      nodeSelector:
+        name: {{ .Values.NodeSelectorName }}
+      volumes:
+      - name: config
+        secret:
+          secretName: config
+
