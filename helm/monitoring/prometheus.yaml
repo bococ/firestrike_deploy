@@ -443,6 +443,15 @@ serverFiles:
       annotations:
         summary: "This app {{ $labels.instance }} recently generated some server_error_count"
         description: "This app {{ $labels.instance }} generates {{ $value }} server_error_count in five minutes\n VALUE = {{ $value }}"
+    - alert: IapErrorCount
+      expr: increase(iap_error_count[5m]) > 1
+      for: 1m
+      labels:
+        severity: warning
+        group: Other
+      annotations:
+        summary: "This app {{ $labels.instance }} recently generated some iap_error_count"
+        description: "This app {{ $labels.instance }} generates {{ $value }} iap_error_count in five minutes\n VALUE = {{ $value }}"
   prometheus.yml:
     rule_files:
     - /etc/config/recording_rules.yml
