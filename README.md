@@ -88,7 +88,7 @@ AWS_DEFAULT_REGION
 ```
 
 ```
-git clone git@github.com:infrtx/amazon-eks-ami.git
+git clone git@github.com:bococ/amazon-eks-ami.git
 # Sync and merge upstream
 git fetch upstream
 cd amazon-eks-ami && make 1.16 # Or whatever kubernetes version you want
@@ -103,7 +103,7 @@ Requirements:
 * kubectx
 
 ```
-git clone git@github.com:infrtx/firestrike_deploy.git
+git clone git@github.com:bococ/firestrike_deploy.git
 cd eks/scripts
 export AWS_PROFILE= # Has to point to a correct config in ~/.aws/config
 export ENV=dev # For dev environment
